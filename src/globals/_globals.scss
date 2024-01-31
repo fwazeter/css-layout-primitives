@@ -1,0 +1,17 @@
+@use '../config/settings' as s;
+@use '../config/helpers' as h;
+@use 'fluidScales' as scale;
+@use 'spaceAttrs' as spacing;
+
+
+@mixin globalRoot {
+  :root {
+	@include h.setProp($name: 'measure', $value: '65ch', $prefix: s.$prefix);
+	@include scale.typographyFluidScale();
+	@include h.setProp($name: #{s.$spaceScaleName}, $value: h.getProp(#{s.$spaceScaleName}-0), $prefix: s.$prefix);
+	@include h.setProp($name: #{s.$spaceScaleName}-none, $value: '0', $prefix: s.$prefix);
+	@include scale.spaceFluidScale();
+  }
+  @include spacing.dataSpacing();
+}
+

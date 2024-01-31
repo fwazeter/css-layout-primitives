@@ -1,0 +1,21 @@
+@use '../config/settings' as s;
+@use '../config/helpers' as h;
+
+$spaceDownSteps: map-get(s.$steps, 'spaceDownSteps');
+$spaceUpSteps:   map-get(s.$steps, 'spaceUpSteps');
+
+@mixin dataSpacing( $downSteps: $spaceDownSteps, $upSteps: $spaceUpSteps ) {
+  [data-flow-space='none'] {
+	@include h.setProp(#{s.$spaceScaleName}, $value: '0', $prefix: s.$prefix);
+  }
+  @for $i from 1 through $downSteps {
+	[data-flow-space='-#{$i}'] {
+	  @include h.setProp(#{s.$spaceScaleName}, $value: h.getProp(#{s.$spaceScaleName}--#{$i}, $prefix: s.$prefix));
+	}
+  }
+  @for $i from 0 through $upSteps {
+	[data-flow-space='#{$i}'] {
+	  @include h.setProp(#{s.$spaceScaleName}, $value: h.getProp(#{s.$spaceScaleName}-#{$i}, $prefix: s.$prefix));
+	}
+  }
+}

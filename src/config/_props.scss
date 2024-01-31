@@ -1,0 +1,11 @@
+@use 'helpers' as h;
+@use 'settings' as s;
+
+@mixin spacingAPI($primitiveName) {
+  $spacePropName: h.getProp(#{s.$spaceScaleName}, s.$prefix);
+  @include h.setProp($primitiveName, $spacePropName, s.$prefix);
+}
+
+@function getAPIName($primitiveName) {
+  @return h.getProp(#{$primitiveName});
+}

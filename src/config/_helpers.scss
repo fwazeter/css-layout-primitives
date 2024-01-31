@@ -1,0 +1,62 @@
+/**----------------------------------------------
+ * Helper mixins and functions to set things like custom
+ * props.
+ *----------------------------------------------*/
+
+/**
+ * This mixin declares a set of CSS custom properties.
+ * The variables passed in $vars will be properly prefixed
+ * with the provided prefix value.
+ *
+ * Usage:
+ *
+ * @include setProps((
+ *      measure: 65ch,
+ *      font-family: #{"HelveticaNeue", "Helvetica Neue", Helvetica, sans-serif},
+ * ));
+ *
+ * Result:
+ * --measure: 65ch,
+ * --font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, sans-serif
+ *
+ */
+@mixin setProps( $props, $prefix: false ) {
+  @each $name, $value in $props {
+	@if $prefix {
+	  --#{$prefix}-#{$name}: #{$value};
+	} @else {
+	  --#{$name}:            #{$value};
+	}
+  }
+}
+
+/**
+ * Mixin for overriding the value of a custom prop or setting a single prop.
+ */
+@mixin setProp( $name, $value: '', $prefix: false ) {
+  @if $prefix {
+	--#{$prefix}-#{$name}: #{$value};
+  } @else {
+	--#{$name}:            #{$value};
+  }
+}
+
+/**
+ * Getter function that retrieves a css custom prop value with prefix.
+ */
+@function getProp( $name, $prefix: false ) {
+  @if $prefix {
+	@return var(--#{$prefix}-#{$name});
+  } @else {
+	@return var(--#{$name});
+  }
+}
+
+/** Sets a css class name */
+@function setName( $name, $prefix: false ) {
+  @if $prefix {
+	@return #{$prefix}#{$name};
+  } @else {
+	@return #{$name};
+  }
+}

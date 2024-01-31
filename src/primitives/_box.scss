@@ -1,0 +1,27 @@
+@use '../config/settings' as s;
+@use '../config/helpers' as h;
+@use '../config/props' as p;
+
+$className: 'box';
+$boxAPI:    h.getProp(#{s.$spaceScaleName}-0, s.$prefix);
+
+@mixin box($name: $className, $prefix: s.$prefix) {
+  .#{h.setName( $name, $prefix )} {
+	@include boxValues;
+	
+	& * {
+	  color: inherit;
+	}
+  }
+  
+}
+
+@mixin boxValues {
+  $border-default: h.getProp('border-thin', s.$prefix);
+  @include p.spacingAPI(#{$className});
+  display:         block;
+  padding:         p.getAPIName(#{$className});
+  border-width:    $border-default;
+  outline:         $border-default solid transparent;
+  outline-offset:  calc($border-default * -1);
+}

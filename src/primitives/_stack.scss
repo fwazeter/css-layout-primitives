@@ -1,0 +1,26 @@
+@use '../config/settings' as s;
+@use '../config/helpers' as h;
+@use '../config/props' as p;
+
+$className: 'stack';
+
+@mixin stack($name: $className, $prefix: s.$prefix) {
+  .#{h.setName($name, $prefix)} {
+	@include flexStackValues;
+	
+	& > * + * {
+	  @include stackValues;
+	}
+  }
+}
+
+@mixin flexStackValues {
+  @include p.spacingAPI(#{$className});
+  display:         flex;
+  flex-direction:  column;
+  justify-content: flex-start;
+}
+
+@mixin stackValues {
+  margin-block-start: p.getAPIName(#{$className});
+}

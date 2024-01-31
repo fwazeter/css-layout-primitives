@@ -1,0 +1,32 @@
+/**-------------------------------------------------
+ * Prefix and namespacing controls
+ -------------------------------------------------*/
+
+$prefix:         false;
+$fontScaleName:  'step';
+$spaceScaleName: 'space';
+
+/**-------------------------------------------------
+ * Fluid sizing scale for spacing & typography.
+ -------------------------------------------------*/
+
+$viewport:       (
+						 'minWidth': 320,
+						 'maxWidth': 1240,
+						 'minFontSize': 18,
+						 'maxFontSize': 20,
+				 );
+/* space & font scale ratio */
+
+$scaleRatios:    (
+						 'fontMinRatio': 1.5,
+						 'fontMaxRatio': 1.618,
+						 'spaceRatio': 1.5,
+				 );
+/* number of steps in each scale */
+$steps:          (
+						 'fontDownSteps': 2,
+						 'fontUpSteps': 5,
+						 'spaceDownSteps': 4,
+						 'spaceUpSteps': 3,
+				 );

@@ -1,0 +1,106 @@
+/**----------------------------------------------
+ * Utility functions to scale things like mathematical equations.
+ *----------------------------------------------*/
+@use 'sass:math';
+@use 'sass:map';
+@use 'helpers' as h;
+
+@mixin fluidScale(
+  $minViewport,
+  $maxViewport,
+  $minFontSize,
+  $maxFontSize,
+  $minRatio,
+  $maxRatio,
+  $downSteps,
+  $upSteps,
+  $name,
+  $prefix: false ) {
+  @if $downSteps {
+	@for $i from 1 through $downSteps {
+	  $stepName: #{$name}--#{$i};
+	  @include setStep(
+					  $minViewport,
+					  $maxViewport,
+					  $minFontSize,
+					  $maxFontSize,
+					  $minRatio,
+					  $maxRatio,
+					  $i,
+			  $downScale: true,
+			  $name:      $stepName,
+			  $prefix:    $prefix)
+	}
+  }
+  @if $upSteps {
+	@for $i from 0 through $upSteps {
+	  $stepName: #{$name}-#{$i};
+	  @include setStep(
+					  $minViewport,
+					  $maxViewport,
+					  $minFontSize,
+					  $maxFontSize,
+					  $minRatio,
+					  $maxRatio,
+					  $i,
+			  $name:   $stepName,
+			  $prefix: $prefix)
+	}
+  }
+}
+
+@mixin setStep(
+  $minViewport,
+  $maxViewport,
+  $minFontSize,
+  $maxFontSize,
+  $minRatio,
+  $maxRatio,
+  $step,
+  $downScale: false,
+  $name,
+  $prefix: false ) {
+  
+  $minValue:       setValue($minFontSize, $step, $minRatio, $downScale);
+  $maxValue:       setValue($maxFontSize, $step, $maxRatio, $downScale);
+  
+  $preferredValue: setPreferredValue($minValue, $maxValue, $minViewport, $maxViewport);
+  $minRem:         math.div($minValue, 16) * 1rem;
+  $maxRem:         math.div($maxValue, 16) * 1rem;
+  @if $prefix {
+	@include h.setProp(
+					#{$name}, (clamp(#{$minRem}, #{$preferredValue}, #{$maxRem})), #{$prefix}
+	);
+  } @else {
+	@include h.setProp(
+					#{$name}, (clamp(#{$minRem}, #{$preferredValue}, #{$maxRem}))
+	);
+  }
+}
+
+@function setValue( $fontSize, $step, $ratio, $downScale: false ) {
+  $scale: math.pow($ratio, $step);
+  @if $downScale {
+	@return math.div($fontSize, $scale);
+  } @else {
+	@return $fontSize * $scale;
+  }
+}
+
+@function adjustViewport( $minFontSize, $maxFontSize, $minViewport, $maxViewport ) {
+  $dividend: 100 * ( $maxFontSize - $minFontSize );
+  $divisor: $maxViewport - $minViewport;
+  @return math.div($dividend, $divisor);
+}
+
+@function adjustRem( $minFontSize, $maxFontSize, $minViewport, $maxViewport ) {
+  $dividend: ($minViewport * $maxFontSize) - ($maxViewport * $minFontSize);
+  $divisor: $minViewport - $maxViewport;
+  @return math.div($dividend, $divisor);
+}
+
+@function setPreferredValue( $minFontSize, $maxFontSize, $minViewport, $maxViewport ) {
+  $rem: math.div(adjustRem( $minFontSize, $maxFontSize, $minViewport, $maxViewport ), 16) * 1rem;
+  $viewport: adjustViewport( $minFontSize, $maxFontSize, $minViewport, $maxViewport ) * 1vw;
+  @return calc(#{$rem} + #{$viewport});
+}

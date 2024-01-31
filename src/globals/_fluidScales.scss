@@ -1,0 +1,38 @@
+/**-------------------------------------------------
+ * Controls fluid typographic scale.
+ -------------------------------------------------*/
+@use '../config/settings' as s;
+@use '../config/utils' as u;
+
+@mixin typographyFluidScale( $name: s.$fontScaleName, $prefix: s.$prefix ) {
+  @include u.fluidScale(
+				  map-get(s.$viewport, 'minWidth'),
+				  map-get(s.$viewport, 'maxWidth'),
+				  map-get(s.$viewport, 'minFontSize'),
+				  map-get(s.$viewport, 'maxFontSize'),
+				  map-get(s.$scaleRatios, 'fontMinRatio'),
+				  map-get(s.$scaleRatios, 'fontMaxRatio'),
+				  map-get(s.$steps, 'fontDownSteps'),
+				  map-get(s.$steps, 'fontUpSteps'),
+				  $name,
+				  $prefix
+  )
+}
+
+@mixin spaceFluidScale( $name: s.$spaceScaleName, $prefix: s.$prefix ) {
+  @include u.fluidScale(
+				  map-get(s.$viewport, 'minWidth'),
+				  map-get(s.$viewport, 'maxWidth'),
+				  map-get(s.$viewport, 'minFontSize'),
+				  map-get(s.$viewport, 'maxFontSize'),
+				  map-get(s.$scaleRatios, 'spaceRatio'),
+				  map-get(s.$scaleRatios, 'spaceRatio'),
+				  map-get(s.$steps, 'spaceDownSteps'),
+				  map-get(s.$steps, 'spaceUpSteps'),
+				  $name,
+				  $prefix
+  )
+}
+
+
+

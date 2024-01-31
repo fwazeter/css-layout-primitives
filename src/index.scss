@@ -1,0 +1,7 @@
+@use 'globals/globals' as g;
+@use 'primitives/box' as b;
+@use 'primitives/stack' as stack;
+
+@include g.globalRoot();
+@include b.box();
+@include stack.stack;
