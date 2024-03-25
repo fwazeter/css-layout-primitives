@@ -8,9 +8,9 @@
   :root {
 	@include h.setProp($name: 'measure', $value: '65ch', $prefix: s.$prefix);
 	@include scale.typographyFluidScale();
-	@include h.setProp($name: #{s.$spaceScaleName}, $value: h.getProp(#{s.$spaceScaleName}-0), $prefix: s.$prefix);
 	@include h.setProp($name: #{s.$spaceScaleName}-none, $value: '0', $prefix: s.$prefix);
 	@include scale.spaceFluidScale();
+	@include h.setProp($name: #{s.$spaceScaleName}, $value: h.getProp(#{s.$spaceScaleName}-0), $prefix: s.$prefix);
   }
   @include spacing.dataSpacing();
 }

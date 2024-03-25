@@ -13,13 +13,11 @@ $boxAPI:    h.getProp(#{s.$spaceScaleName}-0, s.$prefix);
 	  color: inherit;
 	}
   }
-  
 }
 
 @mixin boxValues {
   $border-default: h.getProp('border-thin', s.$prefix);
   @include p.spacingAPI(#{$className});
-  display:         block;
   padding:         p.getAPIName(#{$className});
   border-width:    $border-default;
   outline:         $border-default solid transparent;

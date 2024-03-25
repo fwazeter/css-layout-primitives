@@ -1,0 +1,22 @@
+@layer primitives {
+  .box {
+	--_box-padding:    var(--space, 1rem);
+	--_box-border:     var(--border);
+	--_box-color:      var(--color-dark);
+	--_box-background: var(--color-light);
+	padding:           var(--_box-padding);
+	border:            var(--_box-border) solid;
+	outline:           var(--border) solid transparent;
+	outline-offset:    calc(var(--border) * -1);
+	color:             var(--_box-color);
+	background:        var(--_box-background);
+  }
+  
+  @layer reset {
+	.box * {
+	  --space:  var(--space-0, 1rem);
+	  --border: invalid;
+	  color:    inherit;
+	}
+  }
+}
